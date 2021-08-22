@@ -1,0 +1,192 @@
+/* ------------- General CSS --------------- */
+
+.app-container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    background: #f3f4f3;
+}
+
+/* Slider */
+
+.rc-slider:not(.rc-slider-vertical) {
+    margin-left: 5px;
+    width: calc(100% - 10px);
+}
+
+.rc-slider-track {
+    background-color: #8b95f9;
+}
+
+.rc-slider-step {
+    background-color: transparent;
+}
+
+.rc-slider-dot {
+    border-color: rgba(35,35,35,0.32);
+}
+
+.rc-slider-dot-active,
+.rc-slider-handle {
+  border-color: #5d67b3;
+}
+
+.rc-slider-handle:hover {
+  border-color: #99a0e2;
+}
+
+.rc-slider-handle:active {
+    border-color: #6a73bb;
+    box-shadow: 0 0 5px #6a73bb;
+}
+
+.rc-slider-handle-click-focused:focus {
+    border-color: #5d67b3;
+}
+
+/* Utils */
+
+.align-center {
+    text-align: center;
+}
+
+.bold-text {
+    font-weight: 700;
+}
+
+.white-card {
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.white-card:first-of-type {
+    margin-left: 0 !important;
+}
+
+.white-card-header {
+    padding: 28px 32px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #101038;
+}
+
+.white-card-body {
+    padding: 5px 30px 30px 30px;
+}
+
+/* ------------- Custom App CSS --------------- */
+
+/* App Header */
+
+.app-header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 180px;
+    z-index: -1;
+    background: #64C5B1;
+    content: '';
+    border-radius: 0px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.app-title {
+    color: #fff;
+    margin-bottom: .5rem;
+    line-height: 1.2;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.header-description {
+    color: #fff;
+}
+
+/* Selected text info */
+
+.selected-text-info {
+    display: flex;
+    justify-content: space-around;
+}
+
+.selected-text-pill {
+    background-color: rgb(253 191 61);
+    padding: 12px;
+    border-radius: 24px;
+}
+
+
+/* Info tiles */
+
+.info-tiles-section {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 130px;
+    flex-wrap: wrap;
+}
+
+.info-tile {
+    min-width: 280px;
+    margin: 10px;
+}
+
+.info-tile:last-of-type {
+    margin-right: 0;
+}
+
+.info-tile-header {
+    padding-bottom: 20px;
+}
+
+.info-tile-body {
+    font-weight: 700;
+    font-size: 26px;
+    text-align: end;
+}
+
+#average-reusability-tile {
+    color: #64C5B1;
+}
+
+#lowest-reusability-tile {
+    color: #F16060;
+}
+
+#highest-reusability-tile {
+    color: #567AED;
+}
+
+/* Analysis Charts */
+
+.reusability-analysis-section {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.reusability-analysis-section .white-card {
+    width: 70%
+}
+
+/* Reusability per Version Graph */
+
+#reusability-per-version-graph {
+    flex-grow: 1
+}
+
+/* Reusability overview Bubble chart section */
+
+#version-slider {
+    padding: 0px 25px 25px 77px !important;
+    margin-right: 82px;
+}
