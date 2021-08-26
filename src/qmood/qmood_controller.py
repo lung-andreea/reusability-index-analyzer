@@ -25,7 +25,7 @@ class QMOODController:
 
     @staticmethod
     def calculate_final_score_per_class(coupling_values, cohesion_values, messaging_values, design_size_values):
-        return [1 - (-0.25 * coupling + 0.25 * cohesion + 0.5 * messaging + 0.5 * design_size) for
+        return [-0.25 * coupling + 0.25 * cohesion + 0.5 * messaging + 0.5 * design_size for
                 coupling, cohesion, messaging, design_size in
                 zip(coupling_values, cohesion_values, messaging_values, design_size_values)]
 
