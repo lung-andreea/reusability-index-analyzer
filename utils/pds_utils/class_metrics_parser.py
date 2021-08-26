@@ -21,12 +21,12 @@ def parse_directory(directory):
         filepath = os.path.join(directory, filename)
         file_rows = parse_file(filepath, column_names)
         writer_rows += file_rows
-    with open('../../resources/pds_aggregate_result.csv', 'w', newline='') as csv_file:
+    with open('../../resources/PDS/pds_aggregate_result.csv', 'w', newline='') as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=column_names)
         writer.writeheader()
         for row in writer_rows:
             writer.writerow(row)
 
 
-# dir_name = r'../../resources/aggregate_result'
+# dir_name = r'../../resources/pds_benchmark_metrics_files'
 # parse_directory(dir_name)

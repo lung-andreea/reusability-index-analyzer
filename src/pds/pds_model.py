@@ -10,9 +10,9 @@ from sklearn.model_selection import train_test_split
 from utils.pds_utils.data_utils import get_pds_dataframe_cleaned, get_reuse_rates_dataframe
 from utils.pds_utils.pds_vars import pds_metrics_list
 
-aggregate_metrics_filename = '../../resources/pds_aggregate_result.csv'
-bin_reusability_scores_file = '../../resources/bin_reusability_scores.pkl'
-polynomial_degrees_file = '../../resources/polynomial_degrees.csv'
+aggregate_metrics_filename = '../../resources/PDS/pds_aggregate_result.csv'
+bin_reusability_scores_file = '../../resources/PDS/bin_reusability_scores.pkl'
+polynomial_degrees_file = '../../resources/PDS/polynomial_degrees.csv'
 polynomial_models_directory = '../../resources/pds_regression_models'
 
 

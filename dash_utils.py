@@ -1,9 +1,11 @@
+import re
+
 import plotly.express as px
 import plotly.graph_objects as go
 
 from utils.graph_data_utils import get_average_reusability_dataframe, get_project_versions_info, \
     get_class_reusability_dataframes, get_reusability_per_number_of_classes_distributions, models, \
-    get_average_quality_factors_df
+    get_average_quality_factors_df, natural_sort
 from utils.pds_utils.pds_vars import property_metrics_dict
 
 
@@ -11,21 +13,24 @@ def get_reusability_per_version_figure():
     avg_reusability_df = get_average_reusability_dataframe()
     version_label_to_index_dict = get_project_versions_info()
 
-    reusability_per_version_fig = px.line(avg_reusability_df, x="Version", y="Average Reusability Score", height=500,
+    reusability_per_version_fig = px.line(avg_reusability_df, x="Version", y="Average Reusability Score", height=700,
                                           color="Reusability Model", custom_data=["Project", "Reusability Model"],
-                                          facet_row="Project", facet_row_spacing=0.07,
+                                          facet_row="Project",
+                                          category_orders={"Project": ['Atmosphere', 'Mockito', 'JUnit4']},
+                                          facet_row_spacing=0.07,
                                           markers=True)
-    reusability_per_version_fig.update_xaxes(showticklabels=True, row=1)
-    reusability_per_version_fig.update_xaxes(showticklabels=True, row=2)
-    reusability_per_version_fig.update_xaxes(showticklabels=True, row=3)
+    reusability_per_version_fig.update_xaxes(showticklabels=True, row=1, tickangle=45)
+    reusability_per_version_fig.update_xaxes(showticklabels=True, row=2, tickangle=45)
+    reusability_per_version_fig.update_xaxes(showticklabels=True, row=3, tickangle=45)
+
     reusability_per_version_fig.update_layout(
         {
             'xaxis': {'tickmode': 'array',
-                      'tickvals': list(version_label_to_index_dict['Mockito'].values()),
-                      'ticktext': list(version_label_to_index_dict['Mockito'].keys())},
+                      'tickvals': list(version_label_to_index_dict['JUnit4'].values()),
+                      'ticktext': list(version_label_to_index_dict['JUnit4'].keys())},
             'xaxis2': {'tickmode': 'array',
-                       'tickvals': list(version_label_to_index_dict['JUnit4'].values()),
-                       'ticktext': list(version_label_to_index_dict['JUnit4'].keys())},
+                       'tickvals': list(version_label_to_index_dict['Mockito'].values()),
+                       'ticktext': list(version_label_to_index_dict['Mockito'].keys())},
             'xaxis3': {'tickmode': 'array',
                        'tickvals': list(version_label_to_index_dict['Atmosphere'].values()),
                        'ticktext': list(version_label_to_index_dict['Atmosphere'].keys())},
@@ -133,7 +138,7 @@ def get_reusability_per_number_of_classes_fig(selected_project, selected_version
 
     for model in models:
         fig.add_trace(go.Histogram(
-            x=reusability_per_number_of_classes_distributions['PDS'],
+            x=reusability_per_number_of_classes_distributions[model],
             name=model,
             histfunc='count',
             xbins=dict(
@@ -150,8 +155,8 @@ def get_reusability_per_number_of_classes_fig(selected_project, selected_version
     fig.update_layout(
         xaxis_title_text='Reusability Score',
         yaxis_title_text='Number of Classes',
-        bargap=0.2,
-        bargroupgap=0.1,
+        bargap=0.01,
+        bargroupgap=0.01,
         hoverlabel={'font_color': 'white', "bordercolor": 'white',
                     "font_family": '"Abel", "Open Sans", sans-serif'}
     )

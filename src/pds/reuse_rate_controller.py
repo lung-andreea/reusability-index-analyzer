@@ -5,7 +5,7 @@ import requests
 
 from utils.pds_utils.data_utils import get_pds_data_frame
 
-reuse_rate_output_file = '../../resources/pds_reuse_rates.pkl'
+reuse_rate_output_file = '../../resources/PDS/pds_reuse_rates.pkl'
 
 elastic_search_url = "http://localhost:9200/agora/_search"
 headers = {"Content-Type": "application/json"}

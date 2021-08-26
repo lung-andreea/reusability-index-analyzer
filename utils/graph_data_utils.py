@@ -1,26 +1,23 @@
 import pandas as pd
-
+import re
 
 projects = ['Mockito', 'JUnit4', 'Atmosphere']
 models = ['PDS', 'Taibi', 'QMOOD']
+capitalized_to_lowercase_project_names = {'Mockito': 'mockito', 'JUnit4': 'junit4', 'Atmosphere': 'atmosphere'}
+final_results_folder_path = './resources/final_reusability_estimation_results'
+
+
+def natural_sort(ls):
+    def convert(text):
+        return int(text) if text.isdigit() else text.lower()
+
+    return sorted(ls, key=lambda key: [convert(c) for c in re.split('([0-9]+)', key)])
 
 
 def get_class_reusability_dataframes():
-    junit4_pds_class_reusability_df = pd.read_pickle(
-        f'./resources/final_reusability_estimation_results/PDS/junit4_results.pkl')
-    mockito_pds_class_reusability_df = pd.read_pickle(
-        f'./resources/final_reusability_estimation_results/PDS/mockito_results.pkl')
-    atmosphere_pds_class_reusability_df = pd.read_pickle(
-        f'./resources/final_reusability_estimation_results/PDS/atmosphere_results.pkl')
-    return {'PDS': {'Mockito': mockito_pds_class_reusability_df, 'JUnit4': junit4_pds_class_reusability_df,
-                    'Atmosphere': atmosphere_pds_class_reusability_df},
-            'Taibi': {'Mockito': pd.DataFrame(columns=['Name', 'Reusability Score', 'Version']),
-                      'JUnit4': pd.DataFrame(columns=['Name', 'Reusability Score', 'Version']),
-                      'Atmosphere': pd.DataFrame(columns=['Name', 'Reusability Score', 'Version'])},
-            'QMOOD': {'Mockito': pd.DataFrame(columns=['Name', 'Reusability Score', 'Version']),
-                      'JUnit4': pd.DataFrame(columns=['Name', 'Reusability Score', 'Version']),
-                      'Atmosphere': pd.DataFrame(columns=['Name', 'Reusability Score', 'Version'])}
-            }
+    return {model: {project_name: pd.read_pickle(
+        f'{final_results_folder_path}/{model}/{capitalized_to_lowercase_project_names[project_name]}_results.pkl'
+    ) for project_name in projects} for model in models}
 
 
 def format_reusability_tile_info(value):
@@ -39,9 +36,9 @@ def get_min_max_average_reusability(selected_project, selected_model, selected_v
 def get_project_versions_info():
     class_reusability_dataframes = get_class_reusability_dataframes()
 
-    junit4_versions = sorted(class_reusability_dataframes['PDS']['JUnit4']['Version'].unique())
-    mockito_versions = sorted(class_reusability_dataframes['PDS']['Mockito']['Version'].unique())
-    atmosphere_versions = sorted(class_reusability_dataframes['PDS']['Atmosphere']['Version'].unique())
+    junit4_versions = natural_sort(class_reusability_dataframes['PDS']['JUnit4']['Version'].unique())
+    mockito_versions = natural_sort(class_reusability_dataframes['PDS']['Mockito']['Version'].unique())
+    atmosphere_versions = natural_sort(class_reusability_dataframes['PDS']['Atmosphere']['Version'].unique())
 
     number_of_versions_per_project = {'Mockito': len(mockito_versions), 'JUnit4': len(junit4_versions),
                                       'Atmosphere': len(atmosphere_versions)}

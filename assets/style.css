@@ -175,7 +175,11 @@ body {
 }
 
 .reusability-analysis-section .white-card {
-    width: 70%
+    width: 70%;
+}
+
+.reusability-analysis-section .white-card:first-of-type {
+    width: 100%;
 }
 
 /* Reusability per Version Graph */

@@ -36,7 +36,8 @@ def get_version_slider(selected_project, selected_version):
         min=0,
         max=len(version_info[selected_project]) - 1,
         value=get_selected_version_index(selected_project, selected_version),
-        marks={index: list(version_info[selected_project].keys())[index] for index in
+        marks={index: {'label': list(version_info[selected_project].keys())[index],
+                       'style': {"transform": "rotate(45deg)"}} for index in
                range(len(version_info[selected_project]))},
         step=None
     )

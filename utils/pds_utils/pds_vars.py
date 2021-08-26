@@ -1,10 +1,8 @@
-aggregate_metrics_filename = '../../resources/pds_aggregate_result.csv'
-pds_dataframe_pickle_file = '../../resources/pds_dataframe.pkl'
-pds_dataframe_cleaned_file = '../../resources/pds_dataframe_cleaned.pkl'
-reuse_rate_output_file = '../../resources/pds_reuse_rates.pkl'
-pds_model_weights_file = '../../resources/pds_model_weights.pkl'
-sample_projects_directory = '../../resources/pds_sample_projects'
-final_results_dir = '../../resources/final_reusability_estimation_results'
+aggregate_metrics_filename = '../../resources/PDS/pds_aggregate_result.csv'
+pds_dataframe_pickle_file = '../../resources/PDS/pds_dataframe.pkl'
+pds_dataframe_cleaned_file = '../../resources/PDS/pds_dataframe_cleaned.pkl'
+reuse_rate_output_file = '../../resources/PDS/pds_reuse_rates.pkl'
+pds_model_weights_file = '../../resources/PDS/pds_model_weights.pkl'
 
 property_metrics_dict = {'cohesion': ['LCOM5'], 'complexity': ['NL', 'NLE', 'WMC'],
                          'coupling': ['CBO', 'CBOI', 'NII', 'NOI', 'RFC'],

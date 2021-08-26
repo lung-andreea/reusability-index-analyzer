@@ -3,23 +3,7 @@ import os
 import pandas as pd
 
 from utils.pds_utils.pds_vars import pds_dataframe_pickle_file, reuse_rate_output_file, pds_dataframe_cleaned_file, \
-    sample_projects_directory, pds_model_weights_file, pds_metrics_list
-
-
-def construct_dataframe_pickle_file(metrics_file, dataframe_output_file):
-    data_frame = pd.read_csv(metrics_file, sep=',', low_memory=False)
-    data_frame.to_pickle(dataframe_output_file)
-
-
-def construct_sample_projects_dataframes(sample_projects_dir):
-    sourcemeter_results_dir = f"{sample_projects_dir}/metrics_files"
-    dataframes_directory = f"{sample_projects_dir}/metrics_dataframes"
-    for index_dir_name in next(os.walk(sourcemeter_results_dir))[1]:
-        index_dir_path = os.path.join(sourcemeter_results_dir, index_dir_name)
-        for filename in os.listdir(index_dir_path):
-            filepath = os.path.join(index_dir_path, filename)
-            dataframe_output_file = f"{dataframes_directory}/{index_dir_name}/{filename.split('-')[0]}_dataframe.pkl"
-            construct_dataframe_pickle_file(filepath, dataframe_output_file)
+    pds_model_weights_file, pds_metrics_list
 
 
 def construct_weights_dataframe():
@@ -83,7 +67,5 @@ def get_pds_dataframe_cleaned():
 # construct_dataframe_pickle_file(aggregate_metrics_filename, pds_dataframe_pickle_file)
 # print(get_interval_reuse_rate_percentages())
 # construct_pds_dataframe_cleaned()
-construct_sample_projects_dataframes(sample_projects_directory)
 # construct_weights_dataframe()
-# metrics_df = pd.read_pickle(pds_model_weights_file)
-# print(metrics_df)
+
