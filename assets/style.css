@@ -174,12 +174,101 @@ body {
     margin-top: 10px;
 }
 
-.reusability-analysis-section .white-card {
+.reusability-analysis-section > .white-card {
+    width: 100%;
+}
+
+.reusability-analysis-section > .white-card:last-of-type {
     width: 70%;
 }
 
-.reusability-analysis-section .white-card:first-of-type {
+
+/* Popularity metrics tiles */
+
+.factors-popularity-metrics {
+    display: flex;
     width: 100%;
+}
+
+.factors-popularity-metrics .white-card:first-of-type {
+    flex: 1;
+}
+
+.popularity-metrics-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.popularity-metrics-section .white-card {
+    margin-left: 20px !important;
+}
+
+.popularity-tile {
+    min-width: 280px;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    grid-template-areas: "a b"
+                         "a c";
+    border-left: 6px solid green;
+}
+
+.popularity-tile i {
+    font-size: 40px;
+    grid-area: a;
+    justify-content: center;
+    margin: auto;
+    box-shadow: 1px 0px 0px 0px;
+    padding: 41px 20px;
+}
+
+.popularity_tile .popularity-title-header {
+    grid-area: b;
+}
+
+.popularity_tile .popularity-title-body {
+    grid-area: c;
+}
+
+.popularity-tile-body {
+    font-size: 32px;
+}
+
+.popularity-tile-used-by {
+    border-color: #b66fc5;
+}
+
+.popularity-tile-stars {
+    border-color: #f2b700;
+}
+
+.popularity-tile-downloads {
+    border-color: #8bbf64;
+}
+
+#used-by {
+    color: #b66fc5;
+}
+
+#github-stars {
+    color: #f2b700;
+}
+
+#maven-downloads {
+    color: #8bbf64;
+}
+
+.fa-users {
+    color: #b66fc5;
+}
+
+.fa-star {
+    color: #f2b700;
+}
+
+.fa-download {
+    color: #8bbf64;
 }
 
 /* Reusability per Version Graph */
