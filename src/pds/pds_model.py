@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
-from utils.pds_utils.data_utils import get_pds_dataframe_cleaned, get_reuse_rates_dataframe
+from utils.pds_utils.data_utils import PdsDataBuilder
 from utils.pds_utils.pds_vars import pds_metrics_list
 
 aggregate_metrics_filename = '../../resources/PDS/pds_aggregate_result.csv'
@@ -18,7 +18,8 @@ polynomial_models_directory = '../../resources/pds_regression_models'
 
 class PdsModel:
     def __init__(self):
-        self.data_frame = get_pds_dataframe_cleaned()
+        self.data_utils = PdsDataBuilder()
+        self.data_frame = self.data_utils.get_pds_dataframe_cleaned()
         self.data_sample_size = len(self.data_frame.index)
         # Dictionary of the form:
         # { metric_name: { bin_0_center: reusability_score(bin0), bin_1_center: reusability_score(bin1) ... } ... }
@@ -43,7 +44,7 @@ class PdsModel:
         return bin_width
 
     def build_metrics_general_distribution(self):
-        reuse_rates_records_dict = get_reuse_rates_dataframe().to_dict('records')
+        reuse_rates_records_dict = self.data_utils.get_reuse_rates_dataframe().to_dict('records')
         reuse_rates_dict = {item['class_name']: item['reuse_rate'] for item in reuse_rates_records_dict}
         for metric in pds_metrics_list:
             bin_width = self.get_metric_bin_width(metric)
@@ -70,7 +71,6 @@ class PdsModel:
                                       for
                                       bin_info in item[1].items()]
         df = pd.DataFrame(reusability_scores_df_data, columns=["metric", "bin_center", "reusability_score"])
-        print(df)
         df.to_pickle(bin_reusability_scores_file)
 
     def build_regression_models(self):
@@ -137,7 +137,3 @@ class PdsModel:
         plt.legend()
         plt.show()
 
-
-pds_model = PdsModel()
-pds_model.build_metrics_general_distribution()
-pds_model.build_regression_models()

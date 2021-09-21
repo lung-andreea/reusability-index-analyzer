@@ -15,19 +15,25 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from dash_utils import get_project_versions_info, get_reusability_per_version_figure, \
-    get_empty_text_figure, get_bubble_chart_figure, get_reusability_per_number_of_classes_fig, \
-    get_quality_factors_evolution_fig
-from utils.graph_data_utils import get_selected_version_for_project, get_selected_version_index, \
-    get_min_max_average_reusability
+from dash_utils import DashUtils
+from utils.graph_data_utils import popularity_metrics, GraphDataHandler
 
 external_stylesheets = ['https://fonts.googleapis.com/css?family=Nunito:400,700',
-                        'https://fonts.googleapis.com/css?family=Abel']
+                        'https://fonts.googleapis.com/css?family=Abel',
+                        {
+                            'href': 'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+                            'rel': 'stylesheet',
+                            'integrity': 'sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf',
+                            'crossorigin': 'anonymous'
+                        }]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
 
-version_info = get_project_versions_info()
-reusability_per_version_fig = get_reusability_per_version_figure()
+graph_utils = GraphDataHandler()
+dash_utils = DashUtils()
+
+version_info = graph_utils.get_project_versions_info()
+reusability_per_version_fig = dash_utils.get_reusability_per_version_figure()
 
 
 def get_version_slider(selected_project, selected_version):
@@ -35,7 +41,7 @@ def get_version_slider(selected_project, selected_version):
         id='version-slider',
         min=0,
         max=len(version_info[selected_project]) - 1,
-        value=get_selected_version_index(selected_project, selected_version),
+        value=graph_utils.get_selected_version_index(selected_project, selected_version),
         marks={index: {'label': list(version_info[selected_project].keys())[index],
                        'style': {"transform": "rotate(45deg)"}} for index in
                range(len(version_info[selected_project]))},
@@ -85,12 +91,41 @@ app.layout = html.Div(className='app-container', children=[
                  children=[
                      html.Div(className='white-card-header', children='Reusability Distribution per Number of Classes'),
                      html.Div(className='white-card-body', children=[
-                         dcc.Graph(id='reusability-per-number-of-classes', figure=get_empty_text_figure())])]),
+                         dcc.Graph(id='reusability-per-number-of-classes', figure=dash_utils.get_empty_text_figure())])]),
         html.Div(className='white-card',
                  children=[
-                     html.Div(className='white-card-header', children='Reusability vs Quality Factors Evolution'),
+                     html.Div(className='white-card-header',
+                              children='Reusability Correlation to Maintainability / Complexity / Documentation'),
                      html.Div(className='white-card-body', children=[
-                         dcc.Graph(id='reusability-vs-quality-factors', figure=get_empty_text_figure())])]),
+                         dcc.Graph(id='maintainablity-complexity-documentation', figure=dash_utils.get_empty_text_figure())])]),
+        html.Div(className='factors-popularity-metrics', children=[
+            html.Div(className='white-card',
+                     children=[
+                         html.Div(className='white-card-header',
+                                  children='Composing Factors influence on Measured Reusability'),
+                         html.Div(className='white-card-body', children=[
+                             dcc.Graph(id='reusability-vs-quality-factors', figure=dash_utils.get_empty_text_figure())])]),
+            html.Div(className='popularity-metrics-section', children=[
+                html.Div(className='white-card popularity-tile popularity-tile-used-by', children=[
+                    html.I(className='fas fa-solid fa-users'),
+                    html.Div(className='white-card-header popularity-tile-header', children='Used by'),
+                    html.Div(id='used-by', className='white-card-body info-tile-body popularity-tile-body',
+                             children='-')
+                ]),
+                html.Div(className='white-card popularity-tile popularity-tile-stars', children=[
+                    html.I(className='fas fa-solid fa-star'),
+                    html.Div(className='white-card-header popularity-tile-header', children='Github Stars'),
+                    html.Div(id='github-stars', className='white-card-body info-tile-body popularity-tile-body',
+                             children='-')
+                ]),
+                html.Div(className='white-card popularity-tile popularity-tile-downloads', children=[
+                    html.I(className='fas fa-solid fa-download'),
+                    html.Div(className='white-card-header popularity-tile-header', children='Maven Usages'),
+                    html.Div(id='maven-downloads', className='white-card-body info-tile-body popularity-tile-body',
+                             children='-')
+                ])
+            ]),
+        ])
     ]),
 
     html.Div(className='white-card', children=[
@@ -106,7 +141,7 @@ app.layout = html.Div(className='app-container', children=[
     html.Div(className='white-card', children=[
         html.Div(className='white-card-header', children='Class Reusability Overview'),
         html.Div(className='reusability-overview-section white-card-body', children=[
-            dcc.Graph(id='bubble-chart', figure=get_empty_text_figure()),
+            dcc.Graph(id='bubble-chart', figure=dash_utils.get_empty_text_figure()),
             html.Div(id='version-slider-container')
         ])
     ]),
@@ -133,6 +168,10 @@ def show_version_slider(click_data):
     Output('average-reusability-tile', 'children'),
     Output('reusability-per-number-of-classes', 'figure'),
     Output('reusability-vs-quality-factors', 'figure'),
+    Output('maintainablity-complexity-documentation', 'figure'),
+    Output('used-by', 'children'),
+    Output('github-stars', 'children'),
+    Output('maven-downloads', 'children'),
     Input('reusability-per-version-graph', 'clickData'),
     Input('version-slider-container', 'children'),
     Input('version-slider', 'value'),
@@ -154,19 +193,28 @@ def update_data_on_point_select(click_data, version_slider_children, version_sli
         version_number = None
         version_index = selected_version_index
 
-    selected_version_label = get_selected_version_for_project(selected_project, version_number=version_number,
-                                                              version_index=version_index)
-    bubble_chart_figure = get_bubble_chart_figure(selected_project, selected_model, selected_version_label)
+    selected_version_label = graph_utils.get_selected_version_for_project(selected_project,
+                                                                          version_number=version_number,
+                                                                          version_index=version_index)
+    bubble_chart_figure = dash_utils.get_bubble_chart_figure(selected_project, selected_model, selected_version_label)
 
-    min, max, average = get_min_max_average_reusability(selected_project, selected_model, selected_version_label)
+    min, max, average = graph_utils.get_min_max_average_reusability(selected_project, selected_model,
+                                                                    selected_version_label)
 
-    reusability_per_number_of_classes_fig = get_reusability_per_number_of_classes_fig(selected_project,
-                                                                                      selected_version_label)
+    reusability_per_number_of_classes_fig = dash_utils.get_reusability_per_number_of_classes_fig(selected_project,
+                                                                                                 selected_version_label)
 
-    reusability_vs_quality_factors_fig = get_quality_factors_evolution_fig(selected_project, selected_model)
+    reusability_vs_quality_factors_fig = dash_utils.get_quality_factors_evolution_fig(selected_project, selected_model)
 
-    return selected_project, selected_model, selected_version_label, bubble_chart_figure, min, max, average, \
-           reusability_per_number_of_classes_fig, reusability_vs_quality_factors_fig
+    maintainability_complexity_documentation_figure = dash_utils.get_maintainability_complexity_documentation_figure(
+        selected_project)
+
+    popularity_metrics_dict = popularity_metrics[selected_project]
+
+    return selected_project, selected_model, selected_version_label, bubble_chart_figure, min, max, \
+           average, reusability_per_number_of_classes_fig, reusability_vs_quality_factors_fig, \
+           maintainability_complexity_documentation_figure, popularity_metrics_dict['used-by'], popularity_metrics_dict[
+               'stars'], popularity_metrics_dict['mvn-downloads']
 
 
 if __name__ == '__main__':

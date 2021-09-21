@@ -1,3 +1,4 @@
+pds_benchmark_metrics_files_dir = r'../../resources/pds_benchmark_metrics_files'
 aggregate_metrics_filename = '../../resources/PDS/pds_aggregate_result.csv'
 pds_dataframe_pickle_file = '../../resources/PDS/pds_dataframe.pkl'
 pds_dataframe_cleaned_file = '../../resources/PDS/pds_dataframe_cleaned.pkl'
