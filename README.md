@@ -27,7 +27,7 @@ The main idea of the study is to:
 
 The implemented models were applied on the following 3 open-source projects:
 
-![](resources/images/case-study.png)
+<img src="resources/images/case-study.png" />
 
 ## Case study performed on:
 - **45 versions** of Mockito
