@@ -7,7 +7,9 @@ Made with the help of [Dash](https://dash.plotly.com/).
 
 This was done in the context of the work: 
 _**"A Comparative Analysis Study of the long-term evolution of Reusability in open-source software"**_,
-a study on the evolution of software reusability in relation to different quality factors.
+a study on the evolution of software reusability in relation to different quality factors. 
+
+The written paper can be found [here.](https://drive.google.com/file/d/1DWoPX2LCd3k_-NhiQcP8eJSbvPeaGlTt/view?usp=sharing)
 
 The main idea of the study is to:
 - Implement 3 reusability models from the literature 
