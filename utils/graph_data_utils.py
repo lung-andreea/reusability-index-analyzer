@@ -124,5 +124,5 @@ class GraphDataHandler:
                  'Version': df.Version})
             mean_df = df_filtered.groupby('Version').mean().reset_index()
             mean_df['Model'] = model_series
-            final_dataframe = final_dataframe.append(mean_df, ignore_index=True, sort=False)
+            final_dataframe = pd.concat([final_dataframe, mean_df])
         return final_dataframe

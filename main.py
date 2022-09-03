@@ -10,9 +10,7 @@ Re-usability index analyzer
 # Run this app with `python main.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import Dash, dcc, html, callback_context
 from dash.dependencies import Input, Output
 
 from dash_utils import DashUtils
@@ -27,7 +25,7 @@ external_stylesheets = ['https://fonts.googleapis.com/css?family=Nunito:400,700'
                             'crossorigin': 'anonymous'
                         }]
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
+app = Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
 
 graph_utils = GraphDataHandler()
 dash_utils = DashUtils()
@@ -177,7 +175,7 @@ def show_version_slider(click_data):
     Input('version-slider', 'value'),
     prevent_initial_call=True)
 def update_data_on_point_select(click_data, version_slider_children, version_slider_value):
-    ctx = dash.callback_context
+    ctx = callback_context
     trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
     selected_version_index = version_slider_value or version_slider_children['props']['value']
