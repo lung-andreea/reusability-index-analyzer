@@ -25,7 +25,8 @@ external_stylesheets = ['https://fonts.googleapis.com/css?family=Nunito:400,700'
                             'crossorigin': 'anonymous'
                         }]
 
-app_instance = Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
+app = Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
+server = app.server
 
 graph_utils = GraphDataHandler()
 dash_utils = DashUtils()
@@ -47,7 +48,7 @@ def get_version_slider(selected_project, selected_version):
     )
 
 
-app_instance.layout = html.Div(className='app-container', children=[
+app.layout = html.Div(className='app-container', children=[
     html.Div(className='app-header', children=[
         html.H4(className='align-center app-title', children='Reusability Analytics Dashboard'),
 
@@ -146,7 +147,7 @@ app_instance.layout = html.Div(className='app-container', children=[
 ])
 
 
-@app_instance.callback(
+@app.callback(
     Output('version-slider-container', 'children'),
     Input('reusability-per-version-graph', 'clickData'),
     prevent_initial_call=True)
@@ -156,7 +157,7 @@ def show_version_slider(click_data):
     return get_version_slider(selected_project, point_data['x'])
 
 
-@app_instance.callback(
+@app.callback(
     Output('selected-project', 'children'),
     Output('selected-model', 'children'),
     Output('selected-version', 'children'),
@@ -216,6 +217,4 @@ def update_data_on_point_select(click_data, version_slider_children, version_sli
 
 
 if __name__ == '__main__':
-    app_instance.run_server(debug=True)
-
-app = app_instance.server
+    app.run_server(debug=True)
