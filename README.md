@@ -3,6 +3,8 @@ A series of interactive graphs to track reusability evolution over several versi
 
 Made with the help of [Dash](https://dash.plotly.com/).
 
+🚀 App is live [here](https://reusability-index-analyzer.onrender.com/) 🚀
+
 ## Context
 
 This was done in the context of the work: 
