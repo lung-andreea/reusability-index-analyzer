@@ -116,6 +116,10 @@ The implemented models were applied on the following 3 open-source projects:
 
 ## Launch app
 
-- To run app, run the Python script `main.py` in the root folder:
+To run app, first install the required packages:
+
+#### `pip install -r requirements.txt`
+
+Then run the Python script `main.py` in the root folder:
 
 #### `python main.py`
