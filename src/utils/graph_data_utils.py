@@ -4,7 +4,7 @@ import re
 projects = ['Mockito', 'JUnit4', 'Atmosphere']
 models = ['PDS', 'Taibi', 'QMOOD']
 capitalized_to_lowercase_project_names = {'Mockito': 'mockito', 'JUnit4': 'junit4', 'Atmosphere': 'atmosphere'}
-final_results_folder_path = './resources/final_reusability_estimation_results'
+final_results_folder_path = 'resources/final_reusability_estimation_results'
 popularity_metrics = {'Mockito': {'used-by': '107k', 'stars': '8.2k', 'mvn-downloads': '24k'},
                       'JUnit4': {'used-by': '1.8m', 'stars': '12.1k', 'mvn-downloads': '109k'},
                       'Atmosphere': {'used-by': '134', 'stars': '3.5k', 'mvn-downloads': '275'}}
