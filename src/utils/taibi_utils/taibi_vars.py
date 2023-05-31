@@ -1,6 +1,6 @@
 sample_projects_directory_on_disk = '/Volumes/ELEMENTS/sample_projects_disertatie'
 srcML_results_file = '/Volumes/ELEMENTS/srcML_results'
-similarity_files_dir = '../../resources/Taibi/similarity_files'
+similarity_files_dir = '../../../resources/Taibi/similarity_files'
 
 property_metrics_dict = {'Modularity': ['LCOM5', 'CBO'], 'Understandability': ['ROI', 'CIC'],
                          'Low Complexity': ['ACC', 'NM', 'DIT']}

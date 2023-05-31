@@ -2,8 +2,7 @@ import pandas as pd
 
 from src.model_controller import ModelController
 from src.taibi.similarities_controller import SimilaritiesController
-from utils.global_vars_fns import projects, sample_projects_dataframes_path_dir, final_results_dir, DataframeDataHandler
-from utils.taibi_utils.taibi_util_fns import get_lcom_weight, get_cbo_weight, get_cc_weight, get_nm_weight, \
+from src.utils.taibi_utils.taibi_util_fns import get_lcom_weight, get_cbo_weight, get_cc_weight, get_nm_weight, \
     get_dit_weight
 from utils.taibi_utils.taibi_vars import property_metrics_dict, factors_tuning_parameters, metrics_tuning_parameters, \
     similarity_files_dir

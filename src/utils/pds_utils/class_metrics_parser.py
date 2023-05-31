@@ -22,7 +22,7 @@ class ClassMetricsParser:
             filepath = os.path.join(directory, filename)
             file_rows = self.parse_file(filepath, column_names)
             writer_rows += file_rows
-        with open('../../resources/PDS/pds_aggregate_result.csv', 'w', newline='') as csv_file:
+        with open('../../../resources/PDS/pds_aggregate_result.csv', 'w', newline='') as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=column_names)
             writer.writeheader()
             for row in writer_rows:

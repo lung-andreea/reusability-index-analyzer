@@ -1,7 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 
-from utils.graph_data_utils import models, GraphDataHandler
+from utils.graph_data_utils import GraphDataHandler, models
 from utils.pds_utils.pds_vars import property_metrics_dict as pds_property_metrics_dict
 from utils.taibi_utils.taibi_vars import property_metrics_dict as taibi_property_metrics_dict
 from utils.qmood_utils.qmood_vars import property_metrics_dict as qmood_property_metrics_dict

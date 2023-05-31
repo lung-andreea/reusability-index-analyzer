@@ -4,7 +4,7 @@ import re
 
 import statistics
 import pandas as pd
-from utils.taibi_utils.taibi_util_fns import camel_case_split
+from src.utils.taibi_utils.taibi_util_fns import camel_case_split
 from utils.taibi_utils.taibi_vars import srcML_results_file
 from gensim.models.keyedvectors import KeyedVectors
 
