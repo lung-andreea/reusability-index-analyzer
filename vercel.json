@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "./main.py",
+      "src": "dash_app/main.py",
       "use": "@vercel/python"
     }
   ]
